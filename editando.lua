@@ -1,3 +1,3 @@
 macro(2000, "editando", function()
-say("c")
+say("d")
 end)
