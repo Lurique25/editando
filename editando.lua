@@ -23,18 +23,18 @@ function addIP(ip)
     end
 end
 
--- Função de uso do script
-function useScript(ip)
+-- Função de conexão do usuário
+function onUserConnect(ip)
     if addIP(ip) then
         warn("Acesso permitido para o IP: " .. ip)
-        -- Aqui você coloca a lógica do seu script
+        -- Aqui você coloca a lógica do seu script que deve ser executada
     else
         warn("Acesso negado para o IP: " .. ip .. ". Máximo de acessos atingido.")
     end
 end
 
--- Exemplo de uso
-useScript("192.168.1.1") -- Primeiro acesso permitido
-useScript("192.168.1.1") -- Segundo acesso permitido
-useScript("192.168.1.1") -- Terceiro acesso bloqueado
-useScript("192.168.1.2") -- Primeiro acesso para outro IP
+-- Simulação de conexões
+onUserConnect("") -- Primeiro acesso permitido
+onUserConnect("") -- Segundo acesso permitido
+onUserConnect("") -- Terceiro acesso bloqueado
+onUserConnect("") -- Primeiro acesso para outro IP
