@@ -1,40 +1,40 @@
+-- Função para verificar o número de IPs conectados
+function verificarIPsConectados()
+    -- Simulação de verificação, substitua isso pelo seu método real de obtenção de IPs conectados
+    local ipsConectados = obterIPsConectados()  -- Função fictícia para obter IPs conectados
+    local numeroIPs = #ipsConectados
+
+    -- Limite máximo de IPs permitidos
+    local limiteIPs = 2
+
+    if numeroIPs > limiteIPs then
+        warn("Número de IPs conectados excede o limite permitido. O script não será carregado.")
+        return false
+    else
+        warn("Número de IPs conectados está dentro do limite. O script será carregado.")
+        return true
+    end
+end
+
+-- Simulação da função para obter IPs conectados
+function obterIPsConectados()
+    -- Esta função deve ser substituída pela lógica real para obter os IPs conectados
+    -- Aqui está uma simulação com uma tabela de IPs conectados
+    return {"", "", ""}  -- Exemplo de IPs conectados
+end
+
+-- Verificar antes de carregar o restante do script
+if verificarIPsConectados() then
+    -- O restante do seu código vai aqui
+    warn("Carregando o script...")
+    -- Seu código
+else
+    warn("Carregamento do script cancelado.")
+end
+
+
+
 macro(2000, "editando", function()
 say("ultimotest")
 end)
 
-
-
--- Tabela para armazenar IPs e suas contagens de acesso
-local ipAccess = {}
-
--- Função para adicionar/verificar IP
-function addIP(ip)
-    if ipAccess[ip] == nil then
-        ipAccess[ip] = 1
-    else
-        ipAccess[ip] = ipAccess[ip] + 1
-    end
-
-    -- Verifica se o IP já acessou mais de 2 vezes
-    if ipAccess[ip] > 2 then
-        return false -- Bloquear o acesso
-    else
-        return true -- Permitir o acesso
-    end
-end
-
--- Função de conexão do usuário
-function onUserConnect(ip)
-    if addIP(ip) then
-        warn("Acesso permitido para o IP: " .. ip)
-        -- Aqui você coloca a lógica do seu script que deve ser executada
-    else
-        warn("Acesso negado para o IP: " .. ip .. ". Máximo de acessos atingido.")
-    end
-end
-
--- Simulação de conexões
-onUserConnect("") -- Primeiro acesso permitido
-onUserConnect("") -- Segundo acesso permitido
-onUserConnect("") -- Terceiro acesso bloqueado
-onUserConnect("") -- Primeiro acesso para outro IP
