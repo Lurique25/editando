@@ -1,36 +1,44 @@
--- Função para verificar o número de IPs conectados
-function verificarIPsConectados()
-    -- Simulação de verificação, substitua isso pelo seu método real de obtenção de IPs conectados
-    local ipsConectados = obterIPsConectados()  -- Função fictícia para obter IPs conectados
-    local numeroIPs = #ipsConectados
+-- Lista de IPs autorizados (inicialmente vazia)
+local authorizedIPs = {}
 
-    -- Limite máximo de IPs permitidos
-    local limiteIPs = 2
+-- Função para adicionar um IP à lista de autorizados
+function addAuthorizedIP(ip)
+    authorizedIPs[ip] = true
+    warn("IP " .. ip .. " adicionado à lista de autorizados.")
+end
 
-    if numeroIPs > limiteIPs then
-        warn("Número de IPs conectados excede o limite permitido. O script não será carregado.")
-        return false
-    else
-        warn("Número de IPs conectados está dentro do limite. O script será carregado.")
+-- Função para verificar se o IP está autorizado
+function isIPAuthorized(ip)
+    return authorizedIPs[ip] == true
+end
+
+-- Função para autenticar um IP
+function authenticateIP(ip)
+    if isIPAuthorized(ip) then
+        warn("IP " .. ip .. " já está autorizado.")
         return true
+    else
+        warn("IP " .. ip .. " não autorizado. Adicionando à lista.")
+        addAuthorizedIP(ip)
+        return true  -- Ou false se preferir não conceder acesso imediatamente
     end
 end
 
--- Simulação da função para obter IPs conectados
-function obterIPsConectados()
-    -- Esta função deve ser substituída pela lógica real para obter os IPs conectados
-    -- Aqui está uma simulação com uma tabela de IPs conectados
-    return {"", "", ""}  -- Exemplo de IPs conectados
+-- Simulação de uma nova conexão
+function onNewConnection(ip)
+    warn("Nova conexão detectada do IP: " .. ip)
+    if authenticateIP(ip) then
+        -- Ações para IP autenticado
+        warn("Acesso concedido para o IP: " .. ip)
+    else
+        -- Ação para IP não autenticado
+        warn("Acesso negado para o IP: " .. ip)
+    end
 end
 
--- Verificar antes de carregar o restante do script
-if verificarIPsConectados() then
-    -- O restante do seu código vai aqui
-    warn("Carregando o script...")
-    -- Seu código
-else
-    warn("Carregamento do script cancelado.")
-end
+-- Exemplo de uso
+local incomingIP = "192.168.1.102"  -- IP a ser verificado na nova conexão
+onNewConnection(incomingIP)
 
 
 
